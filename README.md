@@ -1,70 +1,185 @@
-# Getting Started with Create React App
+# APVRS 2025 Kiosk App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Interactive event kiosk platform for browsing e-posters and surgical video entries during the APVRS 2025 event.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project is a full-stack kiosk application with a portrait-oriented React frontend, Node.js / Express backend, and MySQL database. It is designed for public event screens where attendees can browse categories, search entries, and open poster or video content through a simple touch-friendly interface.
 
-### `npm start`
+## What This Project Demonstrates
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Full-stack JavaScript application structure
+- React screen-based kiosk flow
+- REST API development with Express
+- MySQL-backed data access
+- Searchable event entry records
+- PDF, image, and video media viewing
+- Idle timer and screensaver behavior for public kiosk usage
+- API validation, sanitization, rate limiting, and logging
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+### Frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React
+- Axios
+- Lucide React
+- CSS / responsive portrait layout
 
-### `npm run build`
+### Backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js
+- Express
+- MySQL2
+- Express Validator
+- Express Rate Limit
+- Validator
+- Winston
+- Dotenv
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Database
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- MySQL
 
-### `npm run eject`
+## Main Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Welcome screen for event kiosk users
+- Organization and menu selection
+- Subspecialty/category browsing
+- Search by title, author, entry code, and remarks
+- Entry list view
+- PDF/image poster viewer
+- Video viewer
+- Idle timeout handling
+- Screensaver mode
+- Backend health check endpoint
+- API routes for organizations, menus, subspecialties, and entries
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```text
+apvrs2025-kiosk-app/
+  backend/
+    src/
+      config/
+      controllers/
+      middleware/
+      models/
+      routes/
+      services/
+      server.js
+  frontend/
+    public/
+    src/
+      components/
+      config/
+      context/
+      hooks/
+      pages/
+      services/
+      utils/
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## API Endpoints
 
-## Learn More
+```text
+GET /api/health
+GET /api/organizations
+GET /api/organizations/:code/menus
+GET /api/menus
+GET /api/subspecialties
+GET /api/entries
+GET /api/entries/:id
+GET /api/search
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Local Setup
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 1. Clone the repository
 
-### Code Splitting
+```bash
+git clone https://github.com/isplank/apvrs2025-kiosk-app.git
+cd apvrs2025-kiosk-app
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 2. Configure the backend
 
-### Analyzing the Bundle Size
+```bash
+cd backend
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Create a `.env` file from your local environment values:
 
-### Making a Progressive Web App
+```text
+PORT=3001
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_NAME=your_database_name
+DB_CONNECTION_LIMIT=10
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Start the backend:
 
-### Advanced Configuration
+```bash
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 3. Configure the frontend
 
-### Deployment
+Open a second terminal:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+cd frontend
+npm install
+npm start
+```
 
-### `npm run build` fails to minify
+The frontend runs at:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```text
+http://localhost:3000
+```
+
+The backend runs at:
+
+```text
+http://localhost:3001
+```
+
+## Environment and Security Notes
+
+Do not commit real `.env` files, database credentials, production media, private event records, or SQL dumps containing sensitive data.
+
+Before making the repository public, confirm that screenshots, sample records, and media files are safe to share.
+
+Remove credential screenshots such as `sql_user.png` before using this repository as a public portfolio project.
+
+## Suggested Portfolio Screenshots
+
+- Welcome screen
+- Menu screen
+- Subspecialty/category screen
+- Searchable entries screen
+- PDF/image poster viewer
+- Video viewer
+- Screensaver screen
+
+## Roadmap
+
+- Keep `.env.example` files sanitized
+- Add database schema documentation
+- Add sample seed data for portfolio demos
+- Add screenshot gallery
+- Remove credential screenshots and rotate any exposed local database passwords
+- Add admin upload workflow
+- Add automated tests for API routes and frontend components
+- Add production deployment notes
+
+## Portfolio Summary
+
+The APVRS 2025 Kiosk App shows my ability to build a real event-facing application with a clear user flow, backend API integration, database-driven records, media handling, and practical kiosk behavior for public use.
