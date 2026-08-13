@@ -1,59 +1,55 @@
 # APVRS 2025 Kiosk App
 
-Interactive event kiosk platform for browsing e-posters and surgical video entries during the APVRS 2025 event.
+Full-stack event kiosk application built with **React**, **Node.js / Express**, and **MySQL**.
 
-## Overview
+This project demonstrates how I design and build practical, database-driven systems for real operational use: clear user flows, searchable records, media viewing, backend APIs, validation, logging, and deployment-ready configuration.
 
-This project is a full-stack kiosk application with a portrait-oriented React frontend, Node.js / Express backend, and MySQL database. It is designed for public event screens where attendees can browse categories, search entries, and open poster or video content through a simple touch-friendly interface.
+## Portfolio Value
 
-## What This Project Demonstrates
+This repository is presented as a public, sanitized portfolio version of an event kiosk system. It shows my ability to:
 
-- Full-stack JavaScript application structure
-- React screen-based kiosk flow
-- REST API development with Express
-- MySQL-backed data access
-- Searchable event entry records
-- PDF, image, and video media viewing
-- Idle timer and screensaver behavior for public kiosk usage
-- API validation, sanitization, rate limiting, and logging
+- Build a full-stack application with separated frontend and backend layers.
+- Translate event browsing workflows into a touch-friendly kiosk interface.
+- Connect a React UI to REST API endpoints and MySQL records.
+- Handle media-based records such as poster images, PDFs, videos, and audio.
+- Add public-kiosk behavior such as idle timeout and screensaver flow.
+- Prepare code for GitHub review without committing credentials or private records.
+
+## Features
+
+- Portrait-style kiosk interface for public event screens
+- Welcome, menu, subspecialty/category, and entries screens
+- Search by title, author, entry code, and remarks
+- Poster, PDF, video, and audio media viewer components
+- Idle timer that returns the kiosk to the home screen
+- Screensaver fallback screen for inactive sessions
+- REST API for organizations, menus, subspecialties, and entries
+- MySQL connection pooling
+- API validation, sanitization, rate limiting, and centralized error handling
+- Winston-based backend logging
+
+## Architecture
+
+```text
+React kiosk frontend
+  -> API service layer with Axios
+  -> Express REST API
+  -> Controller and model layer
+  -> MySQL database
+```
+
+The frontend owns the kiosk navigation and media viewing experience. The backend exposes structured API endpoints for lookup data and event entries. MySQL stores the event records used by the kiosk.
 
 ## Tech Stack
 
-### Frontend
-
-- React
-- Axios
-- Lucide React
-- CSS / responsive portrait layout
-
-### Backend
-
-- Node.js
-- Express
-- MySQL2
-- Express Validator
-- Express Rate Limit
-- Validator
-- Winston
-- Dotenv
-
-### Database
-
-- MySQL
-
-## Main Features
-
-- Welcome screen for event kiosk users
-- Organization and menu selection
-- Subspecialty/category browsing
-- Search by title, author, entry code, and remarks
-- Entry list view
-- PDF/image poster viewer
-- Video viewer
-- Idle timeout handling
-- Screensaver mode
-- Backend health check endpoint
-- API routes for organizations, menus, subspecialties, and entries
+| Layer | Technology |
+| --- | --- |
+| Frontend | React, Axios, Lucide React |
+| Backend | Node.js, Express |
+| Database | MySQL |
+| API Safety | Express Validator, input sanitization, rate limiting |
+| Logging | Winston |
+| Configuration | Dotenv, `.env.example` files |
 
 ## Project Structure
 
@@ -78,9 +74,11 @@ apvrs2025-kiosk-app/
       pages/
       services/
       utils/
+  README.md
+  package.json
 ```
 
-## API Endpoints
+## API Summary
 
 ```text
 GET /api/health
@@ -95,6 +93,12 @@ GET /api/search
 
 ## Local Setup
 
+### Prerequisites
+
+- Node.js
+- npm
+- MySQL
+
 ### 1. Clone the repository
 
 ```bash
@@ -102,84 +106,120 @@ git clone https://github.com/isplank/apvrs2025-kiosk-app.git
 cd apvrs2025-kiosk-app
 ```
 
-### 2. Configure the backend
+### 2. Install dependencies
+
+`node_modules` is intentionally not uploaded to GitHub. Install dependencies locally:
 
 ```bash
-cd backend
-npm install
+npm run install:all
 ```
 
-Create a `.env` file from your local environment values:
+Or install each app separately:
+
+```bash
+npm install --prefix backend
+npm install --prefix frontend
+```
+
+### 3. Configure environment variables
+
+Create `backend/.env` using `backend/.env.example` as a guide:
 
 ```text
-PORT=3001
 NODE_ENV=development
-CORS_ORIGIN=http://localhost:3000
+PORT=3001
+HOST=0.0.0.0
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=your_database_user
 DB_PASSWORD=your_database_password
-DB_NAME=your_database_name
+DB_NAME=event_kiosk
 DB_CONNECTION_LIMIT=10
+CORS_ORIGIN=http://localhost:3000
 ```
 
-Start the backend:
-
-```bash
-npm run dev
-```
-
-### 3. Configure the frontend
-
-Open a second terminal:
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-The frontend runs at:
+Create `frontend/.env` using `frontend/.env.example` as a guide:
 
 ```text
-http://localhost:3000
+REACT_APP_API_URL=http://localhost:3001/api
+REACT_APP_API_TIMEOUT=30000
+REACT_APP_IDLE_TIMEOUT=300000
+REACT_APP_KIOSK_WIDTH=1080
+REACT_APP_KIOSK_HEIGHT=1920
+REACT_APP_ENABLE_ANALYTICS=false
+REACT_APP_ENABLE_DEBUG=false
 ```
 
-The backend runs at:
+### 4. Run the backend
+
+```bash
+npm run dev:backend
+```
+
+Backend URL:
 
 ```text
 http://localhost:3001
 ```
 
-## Environment and Security Notes
+Health check:
 
-Do not commit real `.env` files, database credentials, production media, private event records, or SQL dumps containing sensitive data.
+```text
+http://localhost:3001/api/health
+```
 
-Before making the repository public, confirm that screenshots, sample records, and media files are safe to share.
+### 5. Run the frontend
 
-Remove credential screenshots such as `sql_user.png` before using this repository as a public portfolio project.
+Open another terminal:
 
-## Suggested Portfolio Screenshots
+```bash
+npm run dev:frontend
+```
 
-- Welcome screen
-- Menu screen
-- Subspecialty/category screen
-- Searchable entries screen
-- PDF/image poster viewer
-- Video viewer
-- Screensaver screen
+Frontend URL:
+
+```text
+http://localhost:3000
+```
+
+## Screenshots
+
+This public portfolio repository uses sanitized demo presentation. Add safe screenshots here after replacing any private event records, credentials, or restricted branding.
+
+| Screen | Preview |
+| --- | --- |
+| Welcome screen | Add sanitized screenshot |
+| Menu selection | Add sanitized screenshot |
+| Category selection | Add sanitized screenshot |
+| Searchable entries | Add sanitized screenshot |
+| Poster/PDF viewer | Add sanitized screenshot |
+| Video viewer | Add sanitized screenshot |
+
+## Public Repository Safety
+
+The repository intentionally excludes:
+
+- `node_modules/`
+- `.env` files
+- logs
+- uploads
+- build output
+- database dumps
+- screenshots or media containing private records
+- credential screenshots
+
+Use `.env.example` files for setup documentation. Never commit real database credentials, production records, client data, or private media.
 
 ## Roadmap
 
-- Keep `.env.example` files sanitized
+- Add sanitized demo seed data
 - Add database schema documentation
-- Add sample seed data for portfolio demos
-- Add screenshot gallery
-- Remove credential screenshots and rotate any exposed local database passwords
+- Add a screenshot gallery with safe demo records
 - Add admin upload workflow
-- Add automated tests for API routes and frontend components
-- Add production deployment notes
+- Add API route tests
+- Add frontend component tests
+- Add deployment notes
 
-## Portfolio Summary
+## About This Project
 
-The APVRS 2025 Kiosk App shows my ability to build a real event-facing application with a clear user flow, backend API integration, database-driven records, media handling, and practical kiosk behavior for public use.
+This project is part of my software development portfolio as a **Business Systems / Full-Stack Developer**. It highlights practical application development for real users, structured records, event operations, and database-backed workflows.
